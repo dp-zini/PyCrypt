@@ -1,2 +1,29 @@
 # PyCrypt
-CLI tool for secure file encryption, decryption, and deletion.
+
+PyCrypt provides a simple way to encrypt, decrypt, and delete files in the CLI. 
+
+## Key Features
+- Quickly secure delete files and directories by overwriting the data.
+- Support for custom passphrases.
+- Encrypt and decrypt files and directories seamlessly.
+
+## Installation
+PyRSA uses pycryptodome for encryption and decryption.
+
+``` python
+pip install pycryptodome
+```
+## Usage
+``` python
+$ python pycrypt.py
+```
+From the CLI:
+- Input filepath or drag onto script
+- Select encryption, decryption or deletion
+- Watch the magic!
+
+## Contributions
+Feel free to contribute! There's probably some blatant security flaws in this lol, so take the code, edit it, use it in your own projects, do whatever! Just give proper attribution.
+
+## License
+Licensed under the MIT License, for more info see [LICENSE](https://github.com/dp-zini/PyCrypt/blob/main/LICENSE)

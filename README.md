@@ -22,6 +22,9 @@ From the CLI:
 - Select encryption, decryption or deletion
 - Watch the magic!
 
+## Warning
+This was hacked out in like a day, there are some minor safeguards to prevent deleting the home dir, but you use it at your own risk, I'm not responsible for any lost data.
+
 ## Contributions
 Feel free to contribute! There's probably some blatant security flaws in this lol, so take the code, edit it, use it in your own projects, do whatever! Just give proper attribution.
 

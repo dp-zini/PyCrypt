@@ -55,11 +55,11 @@ def print_ascii_art():
 
 def is_restricted_directory(directory):
     restricted_paths = [
-        Path.home(),  # The user's home directory
-        Path('/')     # The root directory for Unix-like systems
+        Path.home(),  
+        Path('/')    
     ]
     if os.name == 'nt':
-        restricted_paths.append(Path('C:\\'))  # The root directory for Windows systems
+        restricted_paths.append(Path('C:\\')) 
     return Path(directory).resolve() in restricted_paths
 
 def process_directory(directory, action, passphrase=None):
@@ -90,7 +90,7 @@ def main():
         if len(sys.argv) > 1:
             file_path = sys.argv[1]
             print(f"File or directory provided: {file_path}")
-            sys.argv = sys.argv[:1]  # Clear any additional arguments
+            sys.argv = sys.argv[:1] 
         else:
             file_path = input("Enter the path of the file or directory: ")
 
@@ -120,7 +120,6 @@ def main():
             print("Invalid path or action. Please try again.")
 
         if action != 'exit':
-            # Ask the user if they want to continue or exit
             continue_action = input("Do you want to perform another operation? (yes/no): ").lower()
             if continue_action != 'yes':
                 action = 'exit'

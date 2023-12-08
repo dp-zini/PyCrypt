@@ -6,11 +6,9 @@ from pathlib import Path
 import sys
 
 def derive_key(passphrase: str, salt: bytes) -> bytes:
-    """ Derive a key from a passphrase and salt """
     return PBKDF2(passphrase, salt, dkLen=32, count=1000)
 
 def encrypt_file(file_path: str, passphrase: str) -> str:
-    """ Encrypt a file """
     salt = get_random_bytes(16)
     key = derive_key(passphrase, salt)
     cipher = AES.new(key, AES.MODE_GCM)
@@ -23,7 +21,6 @@ def encrypt_file(file_path: str, passphrase: str) -> str:
     return encrypted_file_path
 
 def decrypt_file(encrypted_file_path: str, passphrase: str) -> str:
-    """ Decrypt a file """
     with open(encrypted_file_path, 'rb') as file:
         salt, nonce, tag, ciphertext = [file.read(x) for x in (16, 16, 16, -1)]
     key = derive_key(passphrase, salt)
@@ -35,7 +32,6 @@ def decrypt_file(encrypted_file_path: str, passphrase: str) -> str:
     return decrypted_file_path
 
 def secure_delete(file_path: str):
-    """ Securely delete a file """
     with open(file_path, 'ba+') as file:
         length = file.tell()
         file.seek(0)
@@ -64,7 +60,7 @@ def is_restricted_directory(directory):
 
 def process_directory(directory, action, passphrase=None):
     if is_restricted_directory(directory):
-        print(f"Error: The directory {directory} is restricted and cannot be processed.")
+        print(f"error: the directory {directory} is restricted.")
         return
     for root, dirs, files in os.walk(directory):
         for file in files:
@@ -73,15 +69,15 @@ def process_directory(directory, action, passphrase=None):
                 if action == 'encrypt':
                     encrypted_file = encrypt_file(file_path, passphrase)
                     secure_delete(file_path)
-                    print(f"File encrypted: {encrypted_file}")
+                    print(f"file encrypted: {encrypted_file}")
                 elif action == 'decrypt':
                     decrypted_file = decrypt_file(file_path, passphrase)
-                    print(f"File decrypted: {decrypted_file}")
+                    print(f"file decrypted: {decrypted_file}")
                 elif action == 'delete':
                     secure_delete(file_path)
-                    print(f"File securely deleted: {file_path}")
+                    print(f"file securely deleted: {file_path}")
             except Exception as e:
-                print(f"An error occurred with {file_path}: {e}")
+                print(f"an error occurred with {file_path}: {e}")
 
 def main():
     print_ascii_art()
@@ -89,16 +85,16 @@ def main():
     while action != 'exit':
         if len(sys.argv) > 1:
             file_path = sys.argv[1]
-            print(f"File or directory provided: {file_path}")
+            print(f"file or directory provided: {file_path}")
             sys.argv = sys.argv[:1] 
         else:
-            file_path = input("Enter the path of the file or directory: ")
+            file_path = input("enter the path of the file or directory: ")
 
         if not action:
-            action = input("Enter 'encrypt', 'decrypt', 'delete', or 'exit': ").lower()
+            action = input("enter 'encrypt', 'decrypt', 'delete', or 'exit': ").lower()
         
         if action in ['encrypt', 'decrypt', 'delete']:
-            passphrase = input("Enter your passphrase: ") if action in ['encrypt', 'decrypt'] else None
+            passphrase = input("enter passphrase: ") if action in ['encrypt', 'decrypt'] else None
 
         if os.path.isdir(file_path):
             process_directory(file_path, action, passphrase)
@@ -107,20 +103,20 @@ def main():
                 if action == 'encrypt':
                     encrypted_file = encrypt_file(file_path, passphrase)
                     secure_delete(file_path)
-                    print(f"File encrypted to {encrypted_file}")
+                    print(f"file encrypted to {encrypted_file}")
                 elif action == 'decrypt':
                     decrypted_file = decrypt_file(file_path, passphrase)
-                    print(f"File decrypted to {decrypted_file}")
+                    print(f"file decrypted to {decrypted_file}")
                 elif action == 'delete':
                     secure_delete(file_path)
-                    print(f"File securely deleted: {file_path}")
+                    print(f"file securely deleted: {file_path}")
             except Exception as e:
-                print(f"An error occurred: {e}")
+                print(f"an error occurred: {e}")
         else:
-            print("Invalid path or action. Please try again.")
+            print("invalid path or action. please try again.")
 
         if action != 'exit':
-            continue_action = input("Do you want to perform another operation? (yes/no): ").lower()
+            continue_action = input("another? (yes/no): ").lower()
             if continue_action != 'yes':
                 action = 'exit'
 
